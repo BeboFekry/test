@@ -30,8 +30,7 @@ if st.session_state.memory != []:
 if st.session_state.old != wav_audio_data:
     st.session_state.saved = not st.session_state.saved
 
-if (wav_audio_data is not None) and (st.session_state.saved == False) and (st.session_state.old != wav_audio_data):
-    st.session_state.old = wav_audio_data
+if (wav_audio_data is not None) and (st.session_state.saved == False):
     if os.path.exists('myfile.wav'):
         os.remove('myfile.wav')
     with open('myfile.wav', mode='xb') as f:
@@ -39,5 +38,6 @@ if (wav_audio_data is not None) and (st.session_state.saved == False) and (st.se
     text = voice_in.speech_to_text(path='myfile.wav')
     st.audio('myfile.wav')
     st.session_state.memory.append({'voice':wav_audio_data, 'text':text})
+    st.session_state.old = wav_audio_data
     st.session_state.saved = not st.session_state.saved
     st.rerun()
