@@ -2,21 +2,6 @@ import streamlit as st
 from VoiceIn import VoiceIn
 import os
 from st_audiorec import st_audiorec
-import speech_recognition as sr
-
-recognizer = sr.Recognizer()
-
-def speech_to_text(self, path):
-    """
-    Voice_To_Text
-    these method is to takes the "path of a voice file" and convert it into text
-    """
-    
-    # audio_file = path
-    with sr.AudioFile(path) as source:
-        audio = recognizer.record(source)
-    text = recognizer.recognize_google(audio, language="ar-EG")
-    return text
 
 st.columns([2,1,2])[1].image("electro-pi.png")
 st.title("Advix Bot")
@@ -27,17 +12,19 @@ if 'memory' not in st.session_state:
 
 # st.file_uploader("Upload you voice:", type=['mp3','wav','m4a'])
 
-# voice_in = VoiceIn()
+voice_in = VoiceIn()
 
 wav_audio_data = st_audiorec()
 
-if wav_audio_data is not None:
-    if os.path.exists('myfile.wav'):
-        os.remove('myfile.wav')
-    with open('myfile.wav', mode='xb') as f:
-        f.write(wav_audio_data)
-    text = speech_to_text(path='myfile.wav')
-    st.session_state.memory.append({'voice':wav_audio_data, 'text':text})
+if bt("Run"):
+    if wav_audio_data is not None:
+        if os.path.exists('myfile.wav'):
+            os.remove('myfile.wav')
+        with open('myfile.wav', mode='xb') as f:
+            f.write(wav_audio_data)
+        text = voice_in.speech_to_text(path='myfile.wav')
+        st.session_state.memory.append({'voice':wav_audio_data, 'text':text})
+    # st.rerun()
 
 if st.session_state.memory != []:
     st.write("___")
