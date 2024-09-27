@@ -16,13 +16,6 @@ voice_in = VoiceIn()
 
 wav_audio_data = st_audiorec()
 
-if st.session_state.memory != []:
-    st.write("___")
-    for m in st.session_state.memory:
-        st.audio(m['voice'], format='audio/wav')
-        st.write(m['text'])
-        st.write("---")
-
 if wav_audio_data is not None:
     if os.path.exists('myfile.wav'):
         os.remove('myfile.wav')
@@ -32,5 +25,9 @@ if wav_audio_data is not None:
     st.session_state.memory.append({'voice':wav_audio_data, 'text':text})
     # st.rerun()
 
-
-
+if st.session_state.memory != []:
+    st.write("___")
+    for m in st.session_state.memory:
+        st.audio(m['voice'], format='audio/wav')
+        st.write(m['text'])
+        st.write("---")
