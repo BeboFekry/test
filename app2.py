@@ -14,14 +14,14 @@ if 'memory' not in st.session_state:
 
 voice_in = VoiceIn()
 
-wav_audio_data = st_audiorec()
-
 if st.session_state.memory != []:
     st.write("___")
     for m in st.session_state.memory:
         st.audio(m['voice'], format='audio/wav')
         st.write(m['text'])
         st.write("---")
+
+wav_audio_data = st_audiorec()
 
 if st.button("Run"):
     if wav_audio_data is not None:
