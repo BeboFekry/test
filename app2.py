@@ -4,6 +4,8 @@ import os
 from st_audiorec import st_audiorec
 import speech_recognition as sr
 
+recognizer = sr.Recognizer()
+
 def speech_to_text(self, path):
     """
     Voice_To_Text
@@ -12,13 +14,8 @@ def speech_to_text(self, path):
     
     # audio_file = path
     with sr.AudioFile(path) as source:
-        audio = self.recognizer.record(source)
-
-    if self.verbose==1:
-        print("Recognizing speech from file...")
-    text = self.recognizer.recognize_google(audio, language="ar-EG")
-    if self.verbose==1:
-        print(text)
+        audio = recognizer.record(source)
+    text = recognizer.recognize_google(audio, language="ar-EG")
     return text
 
 st.columns([2,1,2])[1].image("electro-pi.png")
@@ -39,7 +36,7 @@ if wav_audio_data is not None:
         os.remove('myfile.wav')
     with open('myfile.wav', mode='xb') as f:
         f.write(wav_audio_data)
-    text = speech_to_text('myfile.wav')
+    text = speech_to_text(path='myfile.wav')
     st.session_state.memory.append({'voice':wav_audio_data, 'text':text})
 
 if st.session_state.memory != []:
