@@ -24,7 +24,7 @@ with open('myfile.wav', mode='xb') as f:
 text = voice_in.speech_to_text(path='myfile.wav')
 st.audio('myfile.wav')
 st.session_state.memory.append({'voice':wav_audio_data, 'text':text})
-st.rerun()
+# st.rerun()
 
 if st.session_state.memory != []:
     st.write("___")
