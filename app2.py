@@ -23,7 +23,7 @@ if wav_audio_data is not None:
         f.write(wav_audio_data)
     text = voice_in.speech_to_text('myfile.wav')
     st.session_state.memory.append({'voice':wav_audio_data, 'text':text})
-st.rerun()
+    st.rerun()
 if st.session_state.memory != []:
     st.write("___")
     for m in st.session_state.memory:
