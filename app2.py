@@ -16,7 +16,7 @@ voice_in = VoiceIn()
 
 wav_audio_data = st_audiorec()
 
-if bt("Run"):
+if st.button("Run"):
     if wav_audio_data is not None:
         if os.path.exists('myfile.wav'):
             os.remove('myfile.wav')
