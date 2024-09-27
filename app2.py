@@ -20,6 +20,13 @@ voice_in = VoiceIn()
 
 wav_audio_data = st_audiorec()
 
+if st.session_state.memory != []:
+    st.write("___")
+    for m in st.session_state.memory:
+        st.audio(m['voice'], format='audio/wav')
+        st.write(m['text'])
+        st.write("---")
+
 if st.session_state.old != wav_audio_data:
     st.session_state.saved = not st.session_state.saved
 
@@ -33,11 +40,4 @@ if (wav_audio_data is not None) and (st.session_state.saved == False) and (st.se
     st.audio('myfile.wav')
     st.session_state.memory.append({'voice':wav_audio_data, 'text':text})
     st.session_state.saved = not st.session_state.saved
-# st.rerun()
-
-if st.session_state.memory != []:
-    st.write("___")
-    for m in st.session_state.memory:
-        st.audio(m['voice'], format='audio/wav')
-        st.write(m['text'])
-        st.write("---")
+    st.rerun()
