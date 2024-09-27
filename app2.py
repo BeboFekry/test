@@ -22,6 +22,7 @@ if wav_audio_data is not None:
     with open('myfile.wav', mode='xb') as f:
         f.write(wav_audio_data)
     text = voice_in.speech_to_text(path='myfile.wav')
+    st.audio('myfile.wav')
     st.session_state.memory.append({'voice':wav_audio_data, 'text':text})
     wav_audio_data = None
 # st.rerun()
