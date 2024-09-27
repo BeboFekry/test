@@ -1,7 +1,7 @@
 import streamlit as st
 from VoiceIn import VoiceIn
 import os
-from st_audiorec import st_audiorec
+from st_audiorec import st_audiorec #streamlit-audiorec
 
 st.columns([2,1,2])[1].image("electro-pi.png")
 st.title("Advix Bot")
@@ -17,19 +17,17 @@ voice_in = VoiceIn()
 wav_audio_data = st_audiorec()
 
 if wav_audio_data is not None:
-    if os.path.exists('myfile.wav'):
-        os.remove('myfile.wav')
-        if os.path.exists('myfile.wav'):
-            st.write('done')
-    with open('myfile.wav', mode='xb') as f:
+    if not os.path.exists('myfile.wav'):
+        os.mkdir('myfile.wav')
+    with open('myfile.wav', mode='wb') as f:
         f.write(wav_audio_data)
-    text = voice_in.speech_to_text(path='myfile.wav')
+    text = voice_in.speech_to_text('myfile.wav')
     st.session_state.memory.append({'voice':wav_audio_data, 'text':text})
 
-    if st.session_state.memory != []:
-        st.write("___")
-        for m in st.session_state.memory:
-            st.audio(m['voice'], format='audio/wav')
-            st.write(m['text'])
-            st.write("---")
+if st.session_state.memory != []:
+    st.write("___")
+    for m in st.session_state.memory:
+        st.audio(m['voice'], format='audio/wav')
+        st.write(m['text'])
+        st.write("---")
 
