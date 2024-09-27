@@ -9,6 +9,10 @@ st.info("Voice In Module")
 
 if 'memory' not in st.session_state:
     st.session_state.memory = []
+if 'saved' not in st.session_state:
+    st.session_state.saved = False
+if 'old' not in st.session_state:
+    st.session_state.old = ""
 
 # st.file_uploader("Upload you voice:", type=['mp3','wav','m4a'])
 
@@ -16,7 +20,11 @@ voice_in = VoiceIn()
 
 wav_audio_data = st_audiorec()
 
-if wav_audio_data is not None:
+if st.session_state.old != wav_audio_data:
+    st.session_state.saved = not st.session_state.saved
+
+if (wav_audio_data is not None) and (st.session_state.saved == False) and (st.session_state.old != wav_audio_data):
+    st.session_state.old = wav_audio_data
     if os.path.exists('myfile.wav'):
         os.remove('myfile.wav')
     with open('myfile.wav', mode='xb') as f:
@@ -24,6 +32,7 @@ if wav_audio_data is not None:
     text = voice_in.speech_to_text(path='myfile.wav')
     st.audio('myfile.wav')
     st.session_state.memory.append({'voice':wav_audio_data, 'text':text})
+    st.session_state.saved = not st.session_state.saved
 # st.rerun()
 
 if st.session_state.memory != []:
