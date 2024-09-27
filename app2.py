@@ -1,7 +1,7 @@
 import streamlit as st
 from VoiceIn import VoiceIn
 import os
-import shutil
+# import shutil
 from st_audiorec import st_audiorec #streamlit-audiorec
 
 st.columns([2,1,2])[1].image("electro-pi.png")
@@ -19,8 +19,8 @@ wav_audio_data = st_audiorec()
 
 if wav_audio_data is not None:
     if os.path.exists('myfile.wav'):
-        # os.remove('myfile.wav')
-        shutil.rmtree('myfile.wav')
+        os.remove('myfile.wav')
+        # shutil.rmtree('myfile.wav')
     with open('myfile.wav', mode='xb') as f:
         f.write(wav_audio_data)
     text = voice_in.speech_to_text(path='myfile.wav')
